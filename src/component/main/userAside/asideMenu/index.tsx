@@ -15,6 +15,10 @@ import { followEventState } from "@/states/stateMain";
 import Link from "next/link";
 import { subscribeState } from "@/states/stateSubscribe";
 
+import profileImg1 from "src/img/img_profile-image-1.png"
+import profileImg2 from "src/img/img_profile-image-2.png"
+import profileImg3 from "src/img/img_default-profile.png"
+
 export const AsideMenuContainer = styled.div`
   height: 323px;
   display: flex;
@@ -61,6 +65,33 @@ const AsideMenu = () => {
     setMenuComponent(e.target.value);
   };
 
+  const followingData = [
+    {
+      "nickname": "mentor11",
+      "company": "NAVER",
+      "techStack": "Python, R, SQL, TensorFlow, Scikit-learn",
+      "imgUrl": profileImg1
+    },
+    {
+      "nickname": "mentor14",
+      "company": "카카오",
+      "techStack": "JavaScript, React, Vue, HTML, CSS",
+      "imgUrl": profileImg2
+    },
+    {
+      "nickname": "mentor7",
+      "company": "마켓컬리",
+      "techStack": "Spring Boot, Java, Spring, git",
+      "imgUrl": profileImg3
+    },
+    {
+      "nickname": "mentor1",
+      "company": "Amazon",
+      "techStack": "Java, Spring Boot, typescript, AWS",
+      "imgUrl": profileImg1
+    }
+  ];
+
   const followingAxios = async (sessionData: any) => {
     try {
       const result = await authedTokenAxios(sessionData.accessToken).get(
@@ -78,6 +109,9 @@ const AsideMenu = () => {
   useEffect(() => {
     if (!!user.name && sessionData?.user) {
       followingAxios(sessionData).then();
+    }
+    else if (user.name === "유저") {
+      setFollowingList(followingData);
     }
   }, [followEvent, sessionData, user.name]);
 

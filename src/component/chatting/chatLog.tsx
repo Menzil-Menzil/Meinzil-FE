@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import ChattingComponentContext from "@/context/chattingComponentContext";
 import SendIc from "@/img/ic_send.svg";
 import DotIc from "@/img/ic_dot-horizontal.svg";
 import MessageContent from "./messageContent";
@@ -14,15 +13,15 @@ export const ChatLogForm = styled.div`
   height: 750px;
   display: block;
   border-radius: 12px;
-  border: 0px solid #bebebe;
+  border: 0 solid #bebebe;
   background: rgba(255, 255, 255, 0.37);
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 
   .chatLogHeader {
     width: 100%;
     height: 95px;
     position: relative;
-    border-radius: 12px 12px 0px 0px;
+    border-radius: 12px 12px 0 0;
     border-bottom: 1px solid #e0e0e0;
     background: #f4f3f1;
     box-sizing: border-box;
@@ -82,8 +81,8 @@ export const ChatLogForm = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    bottom: 0px;
-    border-radius: 0px 0px 12px 12px;
+    bottom: 0;
+    border-radius: 0 0 12px 12px;
     border-top: 1px solid #e0e0e0;
     background: #f4f3f1;
     box-sizing: border-box;
@@ -134,7 +133,7 @@ export const ChatLogForm = styled.div`
       border: 1px solid #ff8a00;
       background: #ff8a00;
       color: #fff;
-      text-shadow: 0px 0px 3px 0px rgba(216, 101, 37, 0.5);
+      text-shadow: 0 0 3px 0 rgba(216, 101, 37, 0.5);
       font-size: 16px;
       font-style: normal;
       font-weight: 600;

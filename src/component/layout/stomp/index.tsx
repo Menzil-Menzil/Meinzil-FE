@@ -7,12 +7,10 @@ import {
   ratingState,
 } from "@/states/stateSubscribe";
 import { userState } from "@/states/stateUser";
-import { Client } from "@stomp/stompjs";
+import StompJs from "@stomp/stompjs";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-
-var client: Client | null = null;
 
 const Stomp = () => {
   const [subscriptionList, setSubscription] = useState<any[]>([]);
@@ -24,24 +22,6 @@ const Stomp = () => {
   const [ratingSelect, setRatingSelect] = useRecoilState(ratingState);
   const user = useRecoilValue(userState);
 
-  const connect = () => {
-    (client = new Client({
-      brokerURL: `${process.env.NEXT_PUBLIC_STOMP_API_URL}/ws/chat/websocket`,
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    })),
-      client.activate();
-  };
-
-  const disConnect = () => {
-    if (client != null) {
-      if (client.connected) client.deactivate();
-    }
-  };
   const bringAllChatRoom = useCallback(async () => {
     try {
       const res = await axios
@@ -57,6 +37,37 @@ const Stomp = () => {
       alert(e);
     }
   }, [setChattingRooms, user.name]);
+
+  const client = new StompJs.Client({
+    brokerURL: `${process.env.NEXT_PUBLIC_STOMP_API_URL}/ws/chat/websocket`,
+    /*
+    connectHeaders: {
+      login: 'user',
+      passcode: 'password',
+    },
+    onConnect: () => {
+      console.log('success');
+      subscribe();
+      publishOnWait();
+    },
+    */
+    debug: function (str) {
+      console.log(str);
+    },
+    reconnectDelay: 5000,
+    heartbeatIncoming: 4000,
+    heartbeatOutgoing: 4000,
+  });
+
+  const connect = () => {
+    client.activate();
+  };
+
+  const disConnect = () => {
+    client.deactivate();
+    console.log('채팅이 종료되었습니다.');
+    //setIsMatch(false);
+  };
 
   // 채팅방 구독하기
   const subscribe = (roomId: any) => {

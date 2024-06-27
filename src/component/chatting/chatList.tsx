@@ -15,18 +15,18 @@ export const ChatListForm = styled.div`
   position: relative;
   font-style: normal;
   border-radius: 12px;
-  border: 0px solid #bebebe;
+  border: 0 solid #bebebe;
   background: rgba(244, 243, 241, 0.47);
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   .chatMenuHeader {
     position: relative;
     z-index: 1;
     width: 100%;
     height: 60px;
     flex-shrink: 0;
-    border-radius: 12px 12px 0px 0px;
+    border-radius: 12px 12px 0 0;
     background: #f4f3f1;
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
     .chatMenuHeaderText {
       position: absolute;
       color: #000;
@@ -50,7 +50,7 @@ export const ChatListForm = styled.div`
     overflow-y: auto;
     ::-webkit-scrollbar {
       display: none; /*Chrome, Safari, Opera*/
-      width: 0px;
+      width: 0;
     }
     .selectedChatListBox {
       position: relative;
@@ -60,7 +60,7 @@ export const ChatListForm = styled.div`
       display: flex;
       border-bottom: 1px solid #e0e0e0;
       background: #fff;
-      box-shadow: 0px 5px 7px -4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.2);
       box-sizing: border-box;
       pointer-events: none;
       .selectedBoxLine {
@@ -129,14 +129,10 @@ export const ChatListForm = styled.div`
         line-height: 150%; /* 21px */
         overflow: hidden;
         text-overflow: ellipsis;
-        /* white-space: nowrap; */
       }
     }
   }
 `;
-const DAY_HOUR = 24;
-const ONE_HOUR = 1;
-const HIGHLIGHTED_MIN_HOUR = 2;
 
 interface timeData {
   diffDate: any;
@@ -150,20 +146,6 @@ const ChatList = () => {
   );
   const [chattingRooms, setChattingRooms] = useRecoilState(subscribeState);
   const [chattingMentor, setChattingMentor] = useRecoilState(nowSubscribeState);
-  const [timeCheck, setTimeCheck] = useState<timeData>();
-
-  // const timeCalculate = (data: any) => {
-  //   const cardDate = new Date(data.lastMessageTime);
-  //   const today = new Date();
-  //   const diffSec = today.getTime() - cardDate.getTime();
-  //   const diffHour = Math.floor(diffSec / (60 * 60 * 1000));
-  //   const nowTime: timeData = {
-  //     diffDate: Math.floor(diffSec / (24 * 60 * 60 * 1000)),
-  //     diffHour: diffHour,
-  //     diffMin: Math.floor(diffSec / (60 * 1000)),
-  //   };
-  //   setTimeCheck(nowTime);
-  // };
 
   return (
     <ChatListForm>

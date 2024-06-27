@@ -10,7 +10,7 @@ const Layout = ({ children }: childrenType) => {
   return (
     <>
       <Header />
-      <Stomp />
+      {/*<Stomp />*/}
       {children}
       <Footer />
     </>

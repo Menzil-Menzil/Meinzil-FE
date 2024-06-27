@@ -16,7 +16,10 @@ export interface AuthInfo {
 // 일반 유저 접근 금지 path
 const NOT_ALLOWED_TO_MEMBERS = ['/register']
 //일반 유저 권한이 필요한 start path
-const ALLOWED_ONLY_TO_MEMBERS = ['/chatting', '/follows']
+const ALLOWED_ONLY_TO_MEMBERS = [
+  '/chatting',
+  // '/follows'
+]
 
 export default function App(
   {
@@ -63,12 +66,12 @@ export default function App(
         <title>맨질맨질</title>
       </Head>
       <SessionProvider session={pageProps.session}>
-        <RecoilRoot>
-          <GlobalStyle/>
-          <Layout>
-            {renderAuthorizedComponent()}
-          </Layout>
-        </RecoilRoot>
+          <RecoilRoot>
+            <GlobalStyle/>
+            <Layout>
+              {renderAuthorizedComponent()}
+            </Layout>
+          </RecoilRoot>
       </SessionProvider>
     </>
   );

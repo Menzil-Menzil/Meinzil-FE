@@ -21,6 +21,7 @@ import {
   nowSubscribeState,
   ISubscribe,
 } from "@/states/stateSubscribe";
+import profileImg from "src/img/img_profile-image-1.png"
 
 export const ProfileContainerDiv = styled.div`
   width: 1300px;
@@ -64,7 +65,7 @@ const Radio = ({
 const Profile = () => {
   const router = useRouter();
   const profileNickname = router.query.nickname!;
-  const userName = useRecoilValue(userState).name;
+  const user = useRecoilValue(userState);
   const { data: sessionData, update: sessionUpdate } = useSession();
   const [profileDto, setProfileDto] = useState<any>();
   const [answerCount, setAnswerCount] = useState<number>();
@@ -74,7 +75,6 @@ const Profile = () => {
   const [src, setSrc] = useState(unfollowIc);
   const [mentoring, setMentoring] = useRecoilState(mentoringState);
   const [chattingMentor, setChattingMentor] = useRecoilState(nowSubscribeState);
-  const user = useRecoilValue(userState);
 
   const handleMenuChange = (e: any) => {
     setMenuComponent(e.target.value);
@@ -122,17 +122,70 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    myMentorAxios(sessionData, userName, profileNickname).then((result) => {
-      setProfileDto(result.data.followingUserInfoDto);
-      setAnswerCount(result.data.answersCount);
-      setAnswerDataList(result.data.answers);
-    });
-  }, [profileNickname, sessionData, userName]);
+  const profileData = {
+    "followingUserInfoDto": {
+      "nickname": "mentor1",
+      "company": "Amazon",
+      "field": "백엔드",
+      "school": "서울과학기술대학교",
+      "major": "컴퓨터공학과",
+      "subMajor": null,
+      "minor": null,
+      "techStack": "Java, Spring Boot, typescript, AWS",
+      "imgUrl": profileImg,
+      "career": "2015.07 ~ 2018.11 : LG CNS 개발자,\n        2019.04 ~ 2019.12: MyTutor Software Engineer,\n        2020.01 ~ 2022.08: Credit Karma Software Engineer,\n        2022.09 ~ 현재: Amazon Software Engineer",
+      "certificate": "정보처리기사",
+      "awards": null,
+      "activity": null
+    },
+    "answersCount": 56,
+    "answers": [
+      {
+        "questionOrigin": "안녕하세요 백엔드 개발자 취업을 앞둔 취준생인데요,\n제가 개인 플젝이 없어서 플젝을 하려고 하는데\n그 전에 야매로 조금 배운 스프링을 더 배울지, 더 배운다면 인프런의 어느 강의까지는 들어야할지or\n바로 프로젝트를 시작할지\n선배님들의 조언이 필요합니다!",
+        "questionSummary": "백엔드 개발자 취업을 앞둔 취준생이 플젝을 하려하는데, 스프링을 더 배울지 아니면 프로젝트를 시작할지 어떻게 해야할지 선배님들의 조언이 필요합니다.",
+        "answer": "간단한 프로젝트라도 만들어 나가다가, 막히는 부분이 있을때 그 부분을 해결하기 위해서 강의를 들어보시면 어떨까요? 저는 그래야 재미가 있어서 계속하게 되더라구요.",
+        "answerTime": "2023-09-08 05:03:50",
+        "views": 0,
+        "likes": 0
+      },
+      {
+        "questionOrigin": "지방권에서 컴퓨터 쪽 전공 다니고 있는데 웹개발쪽으로 취직하고 싶습니다..\n이번에 졸업해서 본격적으로 배우고 싶긴한데 비용이 부담스러워서 국비지원캠프 해보려고 하는데\n내일배움캠프랑 코드잇 둘 중에 고민이네요.. 해보신 분이나 아시는 분 계신가요?ㅠㅜ\n",
+        "questionSummary": "지방권에서 컴퓨터 전공으로 웹개발에 취직하고 싶은데 비용이 부담스러워서 국비지원캠프를 고민하고 있다. 내일배움캠프와 코드잇 중 어떤 것이 좋은지 알고 싶다.",
+        "answer": "저는 내일배움캠프와 코드잇 둘다 해봤습니다. 프론트엔드 국비로 배웠는데 html/css 마크업과 퍼블리싱 위주로 가르쳤고, 솔직히 그것만으로는 부족했어요. 취업해서 7개월 간 실무를 해봤는데.. 정말 국비학원에서 배운 것과는 천지 차이였어요! 저는 비전공자라서 국비학원 다니길 잘했다고 생각하긴 하지만, 실무에 부딪히고 나서 국비학원을 다니면서 인강도 들을걸.. 싶더라구요. 제 생각에는 국비학원은 포트폴리오를 빡세게 만들 수 있는 시간인 거 같아요.\n만약 국비학원을 다닌다고 하더라도 생활코딩, 코드잇 등의 사이트로 개인공부를 꼭 하시는 걸 추천드려요!\n그리고.. '비전공이지만 개발자로 먹고 삽니다.' 라는 책에서 지방보다 서울 수도권 국비학원의 퀄리티가 훨씬 좋다고 하더라구요.\n저도 부산에서 다녀서 얼마나 차이나는지는 잘 모르겠지만, 전문가가 그렇게 얘기 하니 참고하세요.",
+        "answerTime": "2023-09-08 05:04:50",
+        "views": 0,
+        "likes": 0
+      }
+    ]
+  };
 
   useEffect(() => {
-    if (isFollow) setSrc(unfollowIc);
-    else setSrc(followIc);
+    if(user.name !== "유저" && user.name == profileNickname) {
+      myMentorAxios(sessionData, user.name, profileNickname).then((result) => {
+        setProfileDto(result.data.followingUserInfoDto);
+        setAnswerCount(result.data.answersCount);
+        setAnswerDataList(result.data.answers);
+      });
+    }
+    else if (user.name === "유저") {
+      setProfileDto(profileData.followingUserInfoDto);
+      setAnswerCount(profileData.answersCount);
+      setAnswerDataList(profileData.answers);
+    }
+    else {
+      // myMentorAxios(sessionData, user.name, profileNickname).then((result) => {
+      //   setProfileDto(result.data.followingUserInfoDto);
+      //   setAnswerCount(result.data.answersCount);
+      //   setAnswerDataList(result.data.answers);
+      // });
+    }
+  }, [profileNickname, sessionData, user]);
+
+  useEffect(() => {
+    if(user.name !== profileNickname) {
+      if (isFollow) setSrc(unfollowIc);
+      else setSrc(followIc);
+    }
   }, [isFollow]);
 
   // const moveChattingMentor = async () => {
@@ -193,25 +246,30 @@ const Profile = () => {
               />
               <div className="wrap">
                 <div className="titleWrap">
-                  <div className="role">{"멘토"}</div>
                   <p className="nickname">{profileNickname}</p>
-                  <button className="button emphasisColor">
-                    <SendQuestionIc />
-                    채팅하기
-                  </button>
-                  <button
-                    className="button"
-                    onClick={() =>
-                      onClickUnfollowBtn(
-                        sessionData,
-                        userName!,
-                        profileNickname
-                      )
-                    }
-                  >
-                    <Image src={src} alt="follow" width={21} height={21} />
-                    관심멘토
-                  </button>
+                  {user.name !== profileNickname ?
+                    <>
+                      <button className="button emphasisColor">
+                        <SendQuestionIc />
+                        채팅하기
+                      </button>
+                      <button
+                        className="button"
+                        onClick={() =>
+                          onClickUnfollowBtn(
+                            sessionData,
+                            user.name!,
+                            profileNickname
+                          )
+                        }
+                      >
+                        <Image src={src} alt="follow" width={21} height={21} />
+                        관심멘토
+                      </button>
+                    </>
+                    :
+                    <></>
+                  }
                 </div>
                 <div className="contentWrap">
                   <div className="answers wrap">

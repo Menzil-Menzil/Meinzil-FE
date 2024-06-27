@@ -10,32 +10,43 @@ import Image from "next/image";
 import alarmIc from "@/img/ic_alarm.png"
 import searchIc from "@/img/ic_header_search.png"
 
+import profileImg from "src/img/img_default-profile.png"
+
 const Header = () => {
   const router = useRouter();
   const { data: sessionData, status: sessionStatus } = useSession();
   const [user, setUser] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
 
+  // useEffect(() => {
+  //   console.log("status:", JSON.stringify(sessionStatus));
+  //   if (sessionData?.error) {
+  //     signOut({ redirect: false}).then(() => {
+  //       console.log(sessionData.error)
+  //       alert("다시 로그인 해주세요!")
+  //       return resetUser
+  //     })
+  //   } else {
+  //     if (sessionData?.user?.name && sessionStatus === "authenticated") {
+  //       setUser({
+  //         name: sessionData.user.name,
+  //         email: sessionData.user.email,
+  //         image: sessionData.user.image,
+  //         school:sessionData.user.school,
+  //         major: sessionData.user.major
+  //       })
+  //     }
+  //   }
+  // }, [sessionData?.error, sessionData?.user?.name, setUser]);
   useEffect(() => {
-    console.log("status:", JSON.stringify(sessionStatus));
-    if (sessionData?.error) {
-      signOut({ redirect: false}).then(() => {
-        console.log(sessionData.error)
-        alert("다시 로그인 해주세요!")
-        return resetUser
-      })
-    } else {
-      if (sessionData?.user?.name && sessionStatus === "authenticated") {
-        setUser({
-          name: sessionData.user.name,
-          email: sessionData.user.email,
-          image: sessionData.user.image,
-          school:sessionData.user.school,
-          major: sessionData.user.major
-        })
-      }
-    }
-  }, [sessionData?.error, sessionData?.user?.name, setUser]);
+    setUser({
+      name: "유저",
+      email: "user@example.com",
+      image: profileImg,
+      school: "ㅇㅇ대학교",
+      major: "ㅁㅁ전공"
+    })
+  },[]);
 
   // 모달 버튼 클릭 유무를 저장할 state
   const [showLoginModal, setShowLoginModal] = useState(false);

@@ -53,7 +53,7 @@ export const ProfileContentBox = styled.div`
         font-weight: 600;
       }
       .nickname {
-        max-width: 96px;
+        width: 124px;
         font-size: 20px;
         font-style: normal;
         font-weight: 600;

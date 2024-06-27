@@ -109,11 +109,11 @@ export const InputContainer = styled.div`
     color: #6b6565;
   }
   .nicknameCheckTextDiv {
+    width: 300px;
     margin: 24px 0 0 20px;
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
-    text-align: center;
   }
   .selectBox {
     display: none;

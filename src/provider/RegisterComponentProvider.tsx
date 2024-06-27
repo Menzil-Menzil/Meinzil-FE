@@ -13,6 +13,8 @@ interface UserFormInterface {
   role: string; // “MENTOR” 혹은 “MENTEE”
   birthYear: any; // YYYY, int
   birthMonth: any; // MM, int
+  company: any; // 회사
+  companyYear: any; // YYYY, int
   // 두번째 폼
   school: string; // 교육기관
   score: any; // 학점
@@ -32,8 +34,6 @@ interface UserFormInterface {
   certificate: any; // 값이 없으면 null
   awards: any; // 값이 없으면 null
   activity: any; // 값이 없으면 null
-  // 멘토 추가
-  company: any; // 회사
 }
 
 interface UserRegisterApiInterface {
@@ -59,6 +59,7 @@ interface UserRegisterApiInterface {
   awards: any; //수상내역, null
   activity: any; //대외활동, null
   company: any; //회사, null
+  companyYear: number; //입사년도
 }
 
 const RegisterComponentProvider = ({
@@ -171,7 +172,8 @@ const RegisterComponentProvider = ({
         certificate: !!(data.certificate) ? data.certificate : null,
         awards: !!(data.awards) ? data.awards : null,
         activity: !!(data.activity) ? data.activity : null,
-        company: null,
+        company: !!(data.company) ? data.company : null,
+        companyYear: !!(data.company && data.companyYear) ? data.companyYear : 0,
       };
       console.log(JSON.stringify(submitData));
       if (!!submitData) {

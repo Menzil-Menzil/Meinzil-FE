@@ -23,18 +23,18 @@ export const refreshingTokenAxios = (accessToken: any, refreshToken: any) => {
 
 export const refreshTokenAPI = async (data: any, update: any) => {
   // access 토큰 만료시 재발급을 위한 요청
-  const test_url = `${process.env.NEXT_PUBLIC_API_URL}/api/user/token-test`
-
-  await refreshingTokenAxios(data.accessToken, data.refreshToken)
-    .post(test_url, "None")
-    .then((res) => {
-      const refreshedAccessToken = res.data.data.accessToken;
-      update({ newToken: refreshedAccessToken });
-    })
-    .catch((reason) => {
-      console.log(`${reason.response.data?.code}: ${reason.response.data?.message}`)
-      update( {error: reason.response.data?.message} )
-    })
+  // const test_url = `${process.env.NEXT_PUBLIC_API_URL}/api/user/token-test`
+  //
+  // await refreshingTokenAxios(data.accessToken, data.refreshToken)
+  //   .post(test_url, "None")
+  //   .then((res) => {
+  //     const refreshedAccessToken = res.data.data.accessToken;
+  //     update({ newToken: refreshedAccessToken });
+  //   })
+  //   .catch((reason) => {
+  //     console.log(`${reason.response.data?.code}: ${reason.response.data?.message}`)
+  //     update( {error: reason.response.data?.message} )
+  //   })
 }
 
 export const verifyTokenExp = (token: string) => {

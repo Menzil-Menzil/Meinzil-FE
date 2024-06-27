@@ -7,17 +7,9 @@ import {
   InputContainer,
   TitleBoxDiv,
 } from "@/component/register/register.style";
-import styled from "@emotion/styled";
 import RegisterComponentContext from "@/context/RegisterComponentContext";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-
-export const TestDiv = styled.div`
-  width: 110px;
-  height: 110px;
-  margin-bottom: 25px;
-  background-color: #d9d9d9;
-`;
 
 const RegisterBasic = () => {
   const {
@@ -63,7 +55,7 @@ const RegisterBasic = () => {
 
   const duplicateCheck = async () => {
     try {
-      const res = await axios
+      await axios
         .get(
           `${process.env.NEXT_PUBLIC_API_URL}/api/auth/check-nickname?nickname=${nicknameCheck}`
         )
@@ -163,41 +155,35 @@ const RegisterBasic = () => {
           </div>
         </InputContainer>
         <InputContainer>
-          <div className="titleBox">가입유형</div>
+          <div className="titleBox">직장</div>
           <input
-            type="radio"
-            id="choice_mentee"
-            name="role"
-            value="MENTEE"
-            className="selectBox"
-            {...register("role", {
-              required: true,
+            type="text"
+            placeholder="없으면 생략가능"
+            className="inputBox"
+            style={{ width: "363px", marginRight: "40px" }}
+            {...register("company", {
+              required: false,
+              pattern: {
+                // input의 정규식 패턴
+                value: /^[가-힣]{1,20}$/,
+                message: "올바르지 않은 형식입니다", // 에러 메세지
+              },
             })}
           />
-          <label
-            htmlFor="choice_mentee"
-            style={{ width: "321px", height: "214px", marginRight: "25px" }}
-          >
-            <TestDiv />
-            멘티로 시작하기
-          </label>
+        </InputContainer>
+        <InputContainer>
+          <div className="titleBox">입사년도</div>
           <input
-            type="radio"
-            id="choice_mentor"
-            name="role"
-            value="MENTOR"
-            className="selectBox"
-            {...register("role", {
-              required: true,
+            type="number"
+            placeholder="년(4자리)"
+            className="inputBox"
+            min="1900"
+            max="2900"
+            style={{ width: "144px", marginRight: "20px" }}
+            {...register("companyYear", {
+              required: false,
             })}
           />
-          <label
-            htmlFor="choice_mentor"
-            style={{ width: "321px", height: "214px" }}
-          >
-            <TestDiv />
-            멘토로 시작하기
-          </label>
         </InputContainer>
       </FormContainerDiv>
       <GoPageBtn

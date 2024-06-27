@@ -30,7 +30,7 @@ const UserAside = () => {
     <>
       <UserAsideContainer>
         <div className="asideContainer">
-          {!user.name ? (
+          {(!user.name && user.name !== "유저") ? (
             <UnauthMenu />
           ) : (
             <>
